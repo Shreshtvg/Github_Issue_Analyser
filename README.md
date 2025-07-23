@@ -29,6 +29,8 @@ uvicorn backend.app:app --reload
 
 # In new terminal, start frontend
 streamlit run frontend/streamlit_ui.py
+
+A page will open on the Browser. Enter github link and issue number and click on Analyse
 ```
 
 ## Sample Output
