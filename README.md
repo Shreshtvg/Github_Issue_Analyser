@@ -24,6 +24,9 @@ python -m venv <your env name>
 # Install requirements and Packages
 pip install -r requirements.txt
 
+# In the .env file
+Add you Hugging face access token ( For the interviewer, please check my Documentation for access token )
+
 # Start backend
 uvicorn backend.app:app --reload
 
