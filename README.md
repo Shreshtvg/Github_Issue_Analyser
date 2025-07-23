@@ -15,11 +15,20 @@ A simple website that uses a LLM to analyze a GitHub issue and return a structur
 git clone https://github.com/Shreshtvg/Github_Issue_Analyser.git
 cd github-issue-analyzer
 
+# Create virtual Environment
+python -m venv <your env name>
+
+# Activate your env
+<your env name>\Scripts\activate
+
+# Install requirements and Packages
+pip install -r requirements.txt
+
 # Start backend
-uvicorn backend.app.app:app --reload
+uvicorn backend.app:app --reload
 
 # In new terminal, start frontend
-streamlit run fronten/streamlit_ui.py
+streamlit run frontend/streamlit_ui.py
 ```
 
 ## Sample Output
