@@ -1,6 +1,5 @@
 import streamlit as st
 import requests
-import pyperclip
 
 def repo_exists(repo_url: str) -> bool:
     """Check if the given GitHub repository exists."""
@@ -32,13 +31,24 @@ if st.button("Analyze Issue"):
         issue_number = int(issue_number_input)
         with st.spinner("Analyzing issue..."):
             try:
+                print("Entered the frontend")
                 res = requests.post("http://localhost:8000/analyze", json={
                     "repo_url": repo_url.strip(),
                     "issue_number": issue_number
                 })
+                print("Response received from backend")
+                # Ensure HTTP is successful
                 res.raise_for_status()
+
+                # Get JSON
                 data = res.json()
-                result = data["result"]
-                st.json(result)
+
+                # Check for "error" key
+                if "error" in data:
+                    st.error(f"❌ Error: {data['error']}")
+                else:
+                    result = data["result"]
+                    st.success("✅ Analysis complete!")
+                    st.json(result)
             except Exception as e:
                 st.error(f"Error: {str(e)}")
