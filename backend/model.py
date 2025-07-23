@@ -33,7 +33,7 @@ def analyze_issue(prompt: str) -> dict:
         if "choices" in data and data["choices"]:
             return {"response": data["choices"][0]["message"]["content"]}
         else:
-            return {"error3": "No response from model."}
+            return {"error2": "No response from model."}
 
     except requests.exceptions.RequestException as e:
         return {"error3": str(e)}
