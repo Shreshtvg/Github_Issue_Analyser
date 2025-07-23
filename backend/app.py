@@ -33,9 +33,12 @@ def analyze(input: IssueInput):
     print("Prompt received")
     result = analyze_issue(prompt)
 
+    if "error2" in result:
+        print("Error in model response:", result["error2"])
+        return {"error": result["error2"]}
     if "error3" in result:
-        print("Error in analysis:", result["error"])
-        return {"error": result["error3"]}
+        print("Error in analysis:", result["error3"])
+        return {"error": "Enter the Access Token in backend/.env file."}
 
     cache_result(key, result["response"])
     print("Result from LLM:", result["response"])
