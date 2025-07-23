@@ -1,18 +1,18 @@
 # GitHub Issue Analyzer
 
-A simple app that uses a local LLM to analyze a GitHub issue and return a structured JSON summary.
+A simple website that uses a LLM to analyze a GitHub issue and return a structured JSON summary.
 
 ## Features
 - Takes GitHub repo URL and issue number
-- Uses Ollama's local LLM (LLaMA 3) for analysis
-- Summarizes, classifies, and labels the issue
-- Streamlit UI with JSON copy button
+- Uses 'moonshotai/Kimi-K2-Instruct:novita' for analysis
+- Summarizes the issue
+- Streamlit UI with JSON Output
 - Caches results for speed
 
 ## Setup
 ```bash
 # Clone and navigate
-git clone <repo>
+git clone https://github.com/Shreshtvg/Github_Issue_Analyser.git
 cd github-issue-analyzer
 
 # Start backend
