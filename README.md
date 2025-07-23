@@ -16,10 +16,10 @@ git clone <repo>
 cd github-issue-analyzer
 
 # Start backend
-uvicorn app.app:app --reload
+uvicorn backend.app.app:app --reload
 
 # In new terminal, start frontend
-streamlit run ui/streamlit_ui.py
+streamlit run fronten/streamlit_ui.py
 ```
 
 ## Sample Output
