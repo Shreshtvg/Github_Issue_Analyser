@@ -1,5 +1,4 @@
 import requests
-import os
 import json
 from pathlib import Path
 
@@ -11,14 +10,18 @@ GITHUB_API = "https://api.github.com/repos"
 
 def fetch_issue_data(repo_url: str, issue_number: int) -> dict:
     try:
+
         parts = repo_url.rstrip("/").split("/")[-2:]
         owner, repo = parts[0], parts[1]
         issue_url = f"{GITHUB_API}/{owner}/{repo}/issues/{issue_number}"
         comments_url = f"{GITHUB_API}/{owner}/{repo}/issues/{issue_number}/comments"
 
-        issue = requests.get(issue_url).json()
+        issue_resp = requests.get(issue_url)
+        if issue_resp.status_code == 404:
+            return {"error1": f"Issue #{issue_number} not found in repo."}
+        issue = issue_resp.json()
         comments = requests.get(comments_url).json()
-
+        print("extracted issues and comments")
         return {
             "title": issue.get("title", ""),
             "body": issue.get("body", ""),
@@ -26,18 +29,9 @@ def fetch_issue_data(repo_url: str, issue_number: int) -> dict:
         }
     except Exception as e:
         print("fetch function error:")
-        return {"error": str(e)}
+        return {"error2": str(e)}
 
 def build_prompt(data: dict) -> str:
-    example = '''Example:
-{
-  "summary": "User experiences crash when switching tabs quickly.",
-  "type": "bug",
-  "priority_score": "4 - Affects many users and breaks expected functionality.",
-  "suggested_labels": ["bug", "UI", "high-priority"],
-  "potential_impact": "Users may experience crashes during regular usage."
-}'''
-
     comments_summary = "\n- ".join(data['comments'][:3]) if data['comments'] else "No comments."
     body_snippet = (data['body'][:800] + "...") if len(data['body']) > 800 else data['body']
 
@@ -48,8 +42,6 @@ You are an expert product analyst. Analyze the GitHub issue below and return the
 - priority_score (1–5) with justification
 - suggested_labels (2–3 tags)
 - potential_impact (only if it's a bug)
-
-{example}
 
 Now analyze:
 Title: {data['title']}
